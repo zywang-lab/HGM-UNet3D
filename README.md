@@ -42,7 +42,7 @@ HGM-UNet3D/
 
 ## Project Status
 
-The associated manuscript is currently under peer review.
+The associated manuscript is currently under review.
 
 To protect unpublished research results, this repository currently contains only demonstration materials.
 
