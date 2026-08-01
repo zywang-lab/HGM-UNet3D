@@ -15,6 +15,7 @@ HGM-UNet3D is designed to exploit the intrinsic three-dimensional structural inf
 Prepare the multibeam water column dataset.
 
 The input data should be stored in NIfTI (`.nii.gz`) format. Organize the dataset according to the following structure:
+```
 data/
 ├── images/
 │ ├── 001.nii.gz
@@ -27,7 +28,7 @@ data/
 ├── 002.nii.gz
 ├── 003.nii.gz
 └── ...
-
+```
 Note: Ensure that the image volumes and annotation masks are spatially aligned and have identical dimensions.
 
 ### 1. Build Dataset
@@ -41,7 +42,7 @@ image_folder = "path/to/data/images/"
 label_folder = "path/to/data/labels/"
 image_patch_save_folder = "path/to/dataset/images_patches/"
 label_patch_save_folder = "path/to/dataset/labels_patches/"
-
+```
 The patch size and overlap ratio can also be configured in the script:
 b_nx, b_ny, b_nz = 64, 64, 64
 cover_ratio = 0.5
