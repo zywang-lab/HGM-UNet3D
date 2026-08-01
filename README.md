@@ -194,7 +194,7 @@ Model checkpoints are saved periodically during training.
 
 ## 3. Model Inference
 
-### 3.1 Single Checkpoint Inference
+### 3.1 Checkpoint Inference
 
 Edit the `predict_single_file.py` file:
 
@@ -224,7 +224,41 @@ output/
 └── EM302_prediction.nii.gz
 ```
 
+### 3.2 Bubble Plume Volume Estimation
 
+Use the `calculate_volume.py` script to estimate the physical volume of segmented bubble plumes.
+
+```bash
+python calculate_volume.py
+```
+
+Edit the `calculate_volume.py` file to specify the predicted segmentation file:
+
+```python
+file_path = "output/EM302_prediction.nii.gz"
+```
+
+The script will automatically:
+
+1. Load the predicted bubble plume segmentation in NIfTI (`.nii.gz`) format.
+2. Calculate the number of segmented voxels.
+3. Obtain the voxel size from the image header.
+4. Estimate the physical bubble plume volume.
+5. Output the calculated volume in different units, including `mm³`, `cm³`, `m³`, and `L`.
+
+Example output:
+
+```text
+Target volume: 0.012345 m³
+
+All units:
+Volume: 12345678.00 mm³
+Volume: 12345.68 cm³
+Volume: 0.012346 m³
+Volume: 12.346 L
+Voxel count: 123456
+Voxel size: (dx, dy, dz) mm
+```
 
 
 
