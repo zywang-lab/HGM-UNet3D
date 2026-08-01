@@ -123,14 +123,17 @@ learning_rate_factor = 0.5
 image_patch_folder = "path/to/dataset/images_patches/"
 label_patch_folder = "path/to/dataset/labels_patches/"
 modelsave_path = "path/to/model-log/hgm_unet3d/"
-
+```
 The HGM-UNet3D model is initialized with one input channel and one output channel:
+```
 model = EViT_ResUNet3D(
     input_ch=1,
     output_ch=1,
     init_feats=16
 )
+```
 The optimizer and loss function are configured as follows:
+```
 optimizer = optim.Adam(
     model.parameters(),
     lr=init_learning_rate,
