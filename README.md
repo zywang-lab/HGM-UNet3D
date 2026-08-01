@@ -52,12 +52,13 @@ Run the dataset construction script:
 python padding_and_make_patch.py
 
 #### Parameter Description
---image_folder: Directory containing the input multibeam water-column volumes in NIfTI (.nii.gz) format.
---label_folder: Directory containing the corresponding voxel-level annotation masks in NIfTI (.nii.gz) format.
---image_patch_save_folder: Directory used to save the generated image patches.
---label_patch_save_folder: Directory used to save the corresponding label patches.
---b_nx, b_ny, b_nz: Patch dimensions along the X, Y, and Z directions. The default patch size is 64 × 64 × 64 voxels.
---cover_ratio: Overlap ratio between adjacent patches. The default value is 0.5, corresponding to a sliding-window stride of 32 × 32 × 32 voxels.
+
+- `image_folder`: Directory containing the input multibeam water-column volumes in NIfTI (`.nii.gz`) format.
+- `label_folder`: Directory containing the corresponding voxel-level bubble plume annotation masks in NIfTI (`.nii.gz`) format.
+- `image_patch_save_folder`: Directory used to save the generated image patches in NumPy (`.npy`) format.
+- `label_patch_save_folder`: Directory used to save the generated label patches in NumPy (`.npy`) format.
+- `b_nx`, `b_ny`, `b_nz`: Dimensions of the extracted 3D patches along the X, Y, and Z directions. The default patch size is `64 × 64 × 64` voxels.
+- `cover_ratio`: Overlap ratio between adjacent patches. The default value is `0.5`, corresponding to a sliding-window stride of `32 × 32 × 32` voxels.
 
 The annotation masks are converted into binary masks, where:
 
