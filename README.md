@@ -44,18 +44,20 @@ image_patch_save_folder = "path/to/dataset/images_patches/"
 label_patch_save_folder = "path/to/dataset/labels_patches/"
 ```
 The patch size and overlap ratio can also be configured in the script:
+```
 b_nx, b_ny, b_nz = 64, 64, 64
 cover_ratio = 0.5
-
+```
 Run the dataset construction script:
 python padding_and_make_patch.py
+
 #### Parameter Description
-image_folder: Directory containing the input multibeam water-column volumes in NIfTI (.nii.gz) format.
-label_folder: Directory containing the corresponding voxel-level annotation masks in NIfTI (.nii.gz) format.
-image_patch_save_folder: Directory used to save the generated image patches.
-label_patch_save_folder: Directory used to save the corresponding label patches.
-b_nx, b_ny, b_nz: Patch dimensions along the X, Y, and Z directions. The default patch size is 64 × 64 × 64 voxels.
-cover_ratio: Overlap ratio between adjacent patches. The default value is 0.5, corresponding to a sliding-window stride of 32 × 32 × 32 voxels.
+--image_folder: Directory containing the input multibeam water-column volumes in NIfTI (.nii.gz) format.
+--label_folder: Directory containing the corresponding voxel-level annotation masks in NIfTI (.nii.gz) format.
+--image_patch_save_folder: Directory used to save the generated image patches.
+--label_patch_save_folder: Directory used to save the corresponding label patches.
+--b_nx, b_ny, b_nz: Patch dimensions along the X, Y, and Z directions. The default patch size is 64 × 64 × 64 voxels.
+--cover_ratio: Overlap ratio between adjacent patches. The default value is 0.5, corresponding to a sliding-window stride of 32 × 32 × 32 voxels.
 
 The annotation masks are converted into binary masks, where:
 
