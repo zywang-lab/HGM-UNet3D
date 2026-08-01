@@ -177,7 +177,7 @@ Run the training script:
 python train.py
 
 ```
-####2.4 Model Save Structure
+#### 2.4 Model Save Structure
 Training records are saved as Excel (.xlsx) files, and model parameters are saved as PyTorch (.pth) checkpoints.
 
 The output directory has the following structure:
