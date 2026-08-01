@@ -142,7 +142,9 @@ loss_function = DiceLoss(
     include_background=False,
     sigmoid=True
 )
+```
 A ReduceLROnPlateau scheduler is used to reduce the learning rate when the validation loss stops improving:
+```
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(
     optimizer=optimizer,
     mode="min",
