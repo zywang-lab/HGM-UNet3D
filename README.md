@@ -1,7 +1,12 @@
 # HGM-UNet3D
 
-> A lightweight 3D segmentation framework for bubble plume segmentation in multibeam water column data.
->
+## Project Overview
+This project implements a three-dimensional deep learning framework developed for automatic bubble plume segmentation from volumetric multibeam water column data. The framework is designed to exploit the intrinsic three-dimensional structures of bubble plumes and improve segmentation performance under complex acoustic interference conditions.
+This repository provides:
+- the HGM-UNet3D model implementation;
+- inference pipeline;
+- example multibeam water-column volumes;
+- visualization scripts for segmentation results.
 ## Introduction
 
 HGM-UNet3D is an efficient and lightweight 3D deep learning framework for bubble plume segmentation in multibeam water column data.
