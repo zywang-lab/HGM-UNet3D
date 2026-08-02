@@ -8,6 +8,37 @@ The project provides a computational pipeline including dataset construction, mo
 
 HGM-UNet3D is designed to exploit the intrinsic three-dimensional structural information of bubble plumes and improve segmentation performance under low target-to-background contrast and complex acoustic interference conditions.
 
+## Repository Structure
+
+```text
+HGM-UNet3D/
+├── data_processing/
+│   └── DataProcess.py
+├── demo/
+│   └── demo_visualization.ipynb
+├── generators/
+│   └── image_label_generator.py
+├── images/
+│   ├── demo_result.png
+│   └── demo_result_readme.png
+├── inference/
+│   └── inference.py
+├── model/
+│   └── HGM_Unet3D.py
+├── sample_data/
+│   ├── demo_ground_truth.nii.gz
+│   ├── demo_prediction.nii.gz
+│   └── demo_volume.nii.gz
+├── train/
+│   └── train.py
+├── utils/
+│   ├── read_excel_plot_dice.py
+│   └── read_excel_plot_loss.py
+├── .gitignore
+├── LICENSE
+└── README.md
+```
+
 ## Quick Start
 
 ### 0. Data Preparation
