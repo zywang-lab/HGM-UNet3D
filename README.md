@@ -85,11 +85,21 @@ python data_processing/DataProcess.py \
 
 #### Parameter Description
 
---image_dir
---label_dir
---image_output_dir
---label_output_dir
+##### `--image_dir`
 
+Directory containing the input image volumes in NIfTI format.
+
+##### `--label_dir`
+
+Directory containing the corresponding voxel-level annotation masks.
+
+##### `--image_output_dir`
+
+Directory used to save the generated image patches.
+
+##### `--label_output_dir`
+
+Directory used to save the generated label patches.
 The annotation masks are converted into binary masks, where:
 
 0 represents the background;
