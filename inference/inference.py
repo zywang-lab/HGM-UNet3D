@@ -1,31 +1,62 @@
 import os
+import sys
+import argparse
+from pathlib import Path
 import torch
 import numpy as np
 import SimpleITK as sitk
-from monai.networks.nets import AttentionUnet
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from model.HGM_Unet3D import HGM_UNet3D
 
 ############################################################################
-data_path = r"E:\Datasets\TestData\EM302_test.nii.gz"
-pred_path = r"E:\Datasets\TestData\pred\Experimentation23\EM302_pred_att_final.nii.gz"
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Run HGM-UNet3D inference on a single 3D volume."
+    )
+    parser.add_argument(
+        "--input",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "test" / "EM302_test.nii.gz",
+        help="Path to the input NIfTI volume."
+    )
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=PROJECT_ROOT / "model-log" / "hgm_unet3d" / "UNet3D_000001.pth",
+        help="Path to the trained HGM-UNet3D checkpoint."
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=PROJECT_ROOT / "output" / "EM302_prediction.nii.gz",
+        help="Path for saving the predicted NIfTI volume."
+    )
+    return parser.parse_args()
+
+
+args = parse_args()
+data_path = args.input.resolve()
+pred_path = args.output.resolve()
+checkpoint_path = args.checkpoint.resolve()
+pred_path.parent.mkdir(parents=True, exist_ok=True)
+
 b_nx, b_ny, b_nz = 64, 64, 64
 st_nx, st_ny, st_nz = 32, 32, 32
 pad_nx, pad_ny, pad_nz = 16, 16, 16
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #############################################################################
 
-model = AttentionUnet(
-    spatial_dims=3,
-    in_channels=1,
-    out_channels=1,
-    channels=(16, 32, 64, 128),
-    strides=(2, 2, 2),
-)
+model = HGM_UNet3D(input_ch=1, output_ch=1, init_feats=16)
 model = model.to(device)
-model.load_state_dict(torch.load(r"E:\PycharmProjects\MSDSegEViT-3DResUNet\modelsave\AttentionUnet2\AttentionUNet_000241.pth", weights_only=True, map_location="cuda:0"))
+model.load_state_dict(torch.load(checkpoint_path, weights_only=True, map_location=device))
 model.eval()
 #############################################################################
 
-image_sitk = sitk.ReadImage(data_path)
+image_sitk = sitk.ReadImage(str(data_path))
 image_array = sitk.GetArrayFromImage(image_sitk)
 
 image_padded = np.pad(image_array, [(pad_nz, pad_nz), (pad_ny, pad_ny), (pad_nx, pad_nx)], mode="constant", constant_values=0)
@@ -68,6 +99,4 @@ label_pred_sitk.SetSpacing(image_sitk.GetSpacing())
 label_pred_sitk.SetDirection(image_sitk.GetDirection())
 
 
-sitk.WriteImage(label_pred_sitk, pred_path)
-
-
+sitk.WriteImage(label_pred_sitk, str(pred_path))
