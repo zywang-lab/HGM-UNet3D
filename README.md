@@ -115,10 +115,10 @@ python train/train.py \
     --label_dir dataset/labels_patches \
     --output_dir model-log/hgm_unet3d
 ```
-```
+
 The HGM-UNet3D model is initialized with one input channel and one output channel:
 ```
-model = EViT_ResUNet3D(
+model = HGM_UNet3D(
     input_ch=1,
     output_ch=1,
     init_feats=16
