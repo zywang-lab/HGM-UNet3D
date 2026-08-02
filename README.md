@@ -101,28 +101,20 @@ python padding_and_make_patch.py \
 
 #### 2.1 Configure Training Parameters
 
-Before training, edit the training script to specify the dataset directories, model output directory, and training hyperparameters.
+Run the training script using the default project structure:
 
-Example configuration:
+```bash
+python train/train.py
+```
 
-```python
-# Training epochs
-epochs = 800
+or specify custom paths:
 
-# Batch size and gradient accumulation
-real_batch_size = 8
-accumulation_steps = 4
-effective_batch_size = real_batch_size * accumulation_steps
-
-# Learning-rate configuration
-init_learning_rate = 0.0005
-learning_rate_patience = 12
-learning_rate_factor = 0.5
-
-# Dataset and model output directories
-image_patch_folder = "path/to/dataset/images_patches/"
-label_patch_folder = "path/to/dataset/labels_patches/"
-modelsave_path = "path/to/model-log/hgm_unet3d/"
+```bash
+python train/train.py \
+    --image_dir dataset/images_patches \
+    --label_dir dataset/labels_patches \
+    --output_dir model-log/hgm_unet3d
+```
 ```
 The HGM-UNet3D model is initialized with one input channel and one output channel:
 ```
@@ -199,23 +191,20 @@ Model checkpoints are saved periodically during training.
 
 ### 3.1 Checkpoint Inference
 
-Edit the `inference.py` file:
+Run inference using the default project structure:
 
-```python
-data_path = "data/test/EM302_test.nii.gz"
-pred_path = "output/EM302_prediction.nii.gz"
+```bash
+python inference/inference.py
+```
 
-b_nx, b_ny, b_nz = 64, 64, 64
-st_nx, st_ny, st_nz = 32, 32, 32
-pad_nx, pad_ny, pad_nz = 16, 16, 16
+or specify custom paths:
 
-model.load_state_dict(
-    torch.load(
-        "model-log/hgm_unet3d_model/HGM_UNet3D_000xxx.pth",
-        weights_only=True,
-        map_location="cuda:0"
-    )
-)
+```bash
+python inference/inference.py \
+    --input data/test/EM302_test.nii.gz \
+    --checkpoint model-log/hgm_unet3d/UNet3D_000241.pth \
+    --output output/EM302_prediction.nii.gz
+```
 ```
 Run inference:
 ```
