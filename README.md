@@ -113,15 +113,15 @@ The generated dataset is saved as NumPy (.npy) arrays with the following structu
 ```
 dataset/
 ├── images_patches/
-│   ├── em710_train_pos_0000_0000.npy
-│   ├── em710_train_pos_0000_0001.npy
-│   ├── em710_train_neg_0000_0002.npy
+│   ├── em_train_pos_0000_0000.npy
+│   ├── em_train_pos_0000_0001.npy
+│   ├── em_train_neg_0000_0002.npy
 │   └── ...
 │
 └── labels_patches/
-    ├── em710_train_pos_0000_0000.npy
-    ├── em710_train_pos_0000_0001.npy
-    ├── em710_train_neg_0000_0002.npy
+    ├── em_train_pos_0000_0000.npy
+    ├── em_train_pos_0000_0001.npy
+    ├── em_train_neg_0000_0002.npy
     └── ...
 ```
 Files containing pos correspond to patches that contain bubble plume voxels, whereas files containing neg correspond to background-only patches.
