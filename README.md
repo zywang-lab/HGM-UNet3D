@@ -199,7 +199,7 @@ Model checkpoints are saved periodically during training.
 
 ### 3.1 Checkpoint Inference
 
-Edit the `predict_single_file.py` file:
+Edit the `inference.py` file:
 
 ```python
 data_path = "data/test/EM302_test.nii.gz"
@@ -219,7 +219,7 @@ model.load_state_dict(
 ```
 Run inference:
 ```
-python predict_single_file.py
+python inference.py.py
 ```
 Inference results are saved at the path specified by pred_path:
 ```
