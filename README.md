@@ -4,7 +4,7 @@
 
 This project implements HGM-UNet3D, a three-dimensional deep learning framework for automatic bubble plume segmentation from multibeam water column data.
 
-The project provides a complete pipeline including data preprocessing, dataset construction, model training, inference, and segmentation result visualization.
+The project provides a computational pipeline including dataset construction, model training, checkpoint-based inference, and bubble plume volume estimation.
 
 HGM-UNet3D is designed to exploit the intrinsic three-dimensional structural information of bubble plumes and improve segmentation performance under low target-to-background contrast and complex acoustic interference conditions.
 
@@ -48,8 +48,8 @@ or specify custom paths:
 
 ```bash
 python data_processing/DataProcess.py \
-    --image_dir data/images \
-    --label_dir data/labels \
+    --image_dir data_processing/data/images \
+    --label_dir data_processing/data/labels \
     --image_output_dir dataset/images_patches \
     --label_output_dir dataset/labels_patches
 ```
@@ -88,13 +88,7 @@ dataset/
 Files containing pos correspond to patches that contain bubble plume voxels, whereas files containing neg correspond to background-only patches.
 
 Note: Ensure that the image volumes and annotation masks have matching file names, identical dimensions, and consistent spatial alignment before running the script.
-```
-python data_processing/DataProcess.py \
-    --image_dir data/images \
-    --label_dir data/labels \
-    --image_output_dir dataset/images_patches \
-    --label_output_dir dataset/labels_patches \
-```
+
 ### 2. Model Training
 
 #### 2.1 Configure Training Parameters
