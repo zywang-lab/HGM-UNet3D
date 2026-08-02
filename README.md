@@ -225,9 +225,9 @@ or specify custom paths:
 
 ```bash
 python inference/inference.py \
-    --input data/test/EM302_test.nii.gz \
+    --input data/test/EM_test.nii.gz \
     --checkpoint model-log/hgm_unet3d/your_checkpoint.pth \
-    --output output/EM302_prediction.nii.gz
+    --output output/EM_prediction.nii.gz
 ```
 ### 3.2 Bubble Plume Volume Estimation
 
