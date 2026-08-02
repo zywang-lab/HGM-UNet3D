@@ -156,20 +156,13 @@ scheduler = optim.lr_scheduler.ReduceLROnPlateau(
 - `init_learning_rate`: Initial learning rate.
 - `learning_rate_patience`: Number of epochs with no improvement in validation loss before reducing the learning rate.
 - `learning_rate_factor`: Learning-rate reduction factor.
-- `image_patch_folder`: Directory containing the training image patches.
-- `label_patch_folder`: Directory containing the corresponding training label patches.
-- `modelsave_path`: Model output directory.
+- --image_dir: Directory containing the training image patches.
+- --label_dir: Directory containing the corresponding training label patches.
+- --output_dir: Directory for saving training logs and model checkpoints.
 
 The training dataset uses data augmentation, whereas the validation dataset is loaded without augmentation.
 
-#### 2.3 Start Training
-Run the training script:
-
-```
-python train.py
-
-```
-#### 2.4 Model Save Structure
+#### 2.3 Model Save Structure
 Training records are saved as Excel (.xlsx) files, and model parameters are saved as PyTorch (.pth) checkpoints.
 
 The output directory has the following structure:
@@ -202,20 +195,9 @@ or specify custom paths:
 ```bash
 python inference/inference.py \
     --input data/test/EM302_test.nii.gz \
-    --checkpoint model-log/hgm_unet3d/UNet3D_000241.pth \
+    --checkpoint model-log/hgm_unet3d/your_checkpoint.pth \
     --output output/EM302_prediction.nii.gz
 ```
-```
-Run inference:
-```
-python inference.py.py
-```
-Inference results are saved at the path specified by pred_path:
-```
-output/
-└── EM302_prediction.nii.gz
-```
-
 ### 3.2 Bubble Plume Volume Estimation
 
 Use the `calculate_volume.py` script to estimate the physical volume of segmented bubble plumes.
