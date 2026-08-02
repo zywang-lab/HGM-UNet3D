@@ -93,9 +93,6 @@ python padding_and_make_patch.py \
     --label_dir data/labels \
     --image_output_dir dataset/images_patches \
     --label_output_dir dataset/labels_patches \
-    --patch_size 64 64 64 \
-    --overlap_ratio 0.5 \
-    --negative_keep_ratio 0.05
 ```
 ### 2. Model Training
 
