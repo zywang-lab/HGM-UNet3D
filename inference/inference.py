@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument(
         "--input",
         type=Path,
-        default=PROJECT_ROOT / "data" / "test" / "EM302_test.nii.gz",
+        default=PROJECT_ROOT / "data" / "test" / "EM_test.nii.gz",
         help="Path to the input NIfTI volume."
     )
     parser.add_argument(
@@ -32,7 +32,7 @@ def parse_args():
     parser.add_argument(
         "--output",
         type=Path,
-        default=PROJECT_ROOT / "output" / "EM302_prediction.nii.gz",
+        default=PROJECT_ROOT / "output" / "EM_prediction.nii.gz",
         help="Path for saving the predicted NIfTI volume."
     )
     return parser.parse_args()
