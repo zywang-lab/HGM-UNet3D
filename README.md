@@ -77,10 +77,6 @@ Run:
 ```bash
 python data_processing/DataProcess.py
 
-```bash
-python data_processing/DataProcess.py
-```
-
 or specify custom paths:
 
 ```bash
