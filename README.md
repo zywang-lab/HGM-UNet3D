@@ -33,7 +33,7 @@ Note: Ensure that the image volumes and annotation masks are spatially aligned a
 
 ### 1. Build Dataset
 
-Use `padding_and_make_patch.py` to divide the paired multibeam water column volumes and voxel-level annotation masks into overlapping 3D patches for model training.
+Use `DataProcess.py` to divide the paired multibeam water column volumes and voxel-level annotation masks into overlapping 3D patches for model training.
 
 Run the dataset construction script using the default project structure:
 The patch size and overlap ratio can also be configured in the script:
@@ -41,13 +41,13 @@ The default patch size is 64 × 64 × 64 voxels with an overlap ratio of 0.5.
 Run the dataset construction script using the default project structure:
 
 ```bash
-python padding_and_make_patch.py
+python data_processing/DataProcess.py
 ```
 
 or specify custom paths:
 
 ```bash
-python padding_and_make_patch.py \
+python data_processing/DataProcess.py \
     --image_dir data/images \
     --label_dir data/labels \
     --image_output_dir dataset/images_patches \
@@ -89,7 +89,7 @@ Files containing pos correspond to patches that contain bubble plume voxels, whe
 
 Note: Ensure that the image volumes and annotation masks have matching file names, identical dimensions, and consistent spatial alignment before running the script.
 ```
-python padding_and_make_patch.py \
+python data_processing/DataProcess.py \
     --image_dir data/images \
     --label_dir data/labels \
     --image_output_dir dataset/images_patches \
