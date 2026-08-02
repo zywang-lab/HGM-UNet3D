@@ -35,30 +35,31 @@ Note: Ensure that the image volumes and annotation masks are spatially aligned a
 
 Use `padding_and_make_patch.py` to divide the paired multibeam water column volumes and voxel-level annotation masks into overlapping 3D patches for model training.
 
-Before running the script, edit the following paths in `padding_and_make_patch.py`:
-
-```python
-image_folder = "path/to/data/images/"
-label_folder = "path/to/data/labels/"
-image_patch_save_folder = "path/to/dataset/images_patches/"
-label_patch_save_folder = "path/to/dataset/labels_patches/"
-```
+Run the dataset construction script using the default project structure:
 The patch size and overlap ratio can also be configured in the script:
-```
-b_nx, b_ny, b_nz = 64, 64, 64
-cover_ratio = 0.5
-```
-Run the dataset construction script:
+The default patch size is 64 × 64 × 64 voxels with an overlap ratio of 0.5.
+Run the dataset construction script using the default project structure:
+
+```bash
 python padding_and_make_patch.py
+```
+
+or specify custom paths:
+
+```bash
+python padding_and_make_patch.py \
+    --image_dir data/images \
+    --label_dir data/labels \
+    --image_output_dir dataset/images_patches \
+    --label_output_dir dataset/labels_patches
+```
 
 #### Parameter Description
 
-- `image_folder`: Directory containing the input multibeam water-column volumes in NIfTI (`.nii.gz`) format.
-- `label_folder`: Directory containing the corresponding voxel-level bubble plume annotation masks in NIfTI (`.nii.gz`) format.
-- `image_patch_save_folder`: Directory used to save the generated image patches in NumPy (`.npy`) format.
-- `label_patch_save_folder`: Directory used to save the generated label patches in NumPy (`.npy`) format.
-- `b_nx`, `b_ny`, `b_nz`: Dimensions of the extracted 3D patches along the X, Y, and Z directions. The default patch size is `64 × 64 × 64` voxels.
-- `cover_ratio`: Overlap ratio between adjacent patches. The default value is `0.5`, corresponding to a sliding-window stride of `32 × 32 × 32` voxels.
+--image_dir
+--label_dir
+--image_output_dir
+--label_output_dir
 
 The annotation masks are converted into binary masks, where:
 
