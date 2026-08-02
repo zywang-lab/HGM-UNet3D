@@ -1,10 +1,17 @@
 import os
+import sys
+import argparse
+from pathlib import Path
 import torch
 import numpy as np
 from tqdm import tqdm
 import torch.optim as optim
 from openpyxl import Workbook
-from models.HGM_Unet3D import HGM_UNet3D
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from model.HGM_Unet3D import HGM_UNet3D
 from monai.losses import DiceLoss
 from torch.utils.data import DataLoader
 from generators.image_label_generator import Image_Label_train, Image_Label_valid
@@ -108,9 +115,18 @@ effective_batch_size = real_batch_size * accumulation_steps
 init_learning_rate = 0.0005
 learning_rate_patience = 12
 learning_rate_factor = 0.5
-modelsave_path = "..\\modelsave\\EViT_ResUNet3D_Gated_Bidirection_layer3_depth2\\"
-image_patch_folder = "E:\\Datasets\\EM710\\images_patches\\"
-label_patch_folder = "E:\\Datasets\\em710\\labels_patches\\"
+def parse_args():
+    parser = argparse.ArgumentParser(description="Train HGM-UNet3D for 3D bubble plume segmentation.")
+    parser.add_argument("--image_dir", type=Path,
+                        default=PROJECT_ROOT / "dataset" / "images_patches",
+                        help="Directory containing training image patches.")
+    parser.add_argument("--label_dir", type=Path,
+                        default=PROJECT_ROOT / "dataset" / "labels_patches",
+                        help="Directory containing corresponding label patches.")
+    parser.add_argument("--output_dir", type=Path,
+                        default=PROJECT_ROOT / "model-log" / "hgm_unet3d",
+                        help="Directory used to save training records and model checkpoints.")
+    return parser.parse_args()
 #################################################################
 
 
@@ -118,13 +134,19 @@ dsc_loss = DiceLoss(include_background=False, sigmoid=True)
 
 
 def main():
+    args = parse_args()
+    image_patch_folder = args.image_dir.resolve()
+    label_patch_folder = args.label_dir.resolve()
+    modelsave_path = args.output_dir.resolve()
+    modelsave_path.mkdir(parents=True, exist_ok=True)
+
     image_patch_names = sorted(os.listdir(image_patch_folder))
     label_patch_names = sorted(os.listdir(label_patch_folder))
     image_label_path_pairs = []
     for i in range(len(image_patch_names)):
-        image_patch_path = image_patch_folder + image_patch_names[i]
-        label_patch_path = label_patch_folder + label_patch_names[i]
-        image_label_path_pairs.append([image_patch_path, label_patch_path])
+        image_patch_path = image_patch_folder / image_patch_names[i]
+        label_patch_path = label_patch_folder / label_patch_names[i]
+        image_label_path_pairs.append([str(image_patch_path), str(label_patch_path)])
 
     np.random.shuffle(image_label_path_pairs)
     n_training = int(len(image_label_path_pairs) * 0.8)
@@ -191,7 +213,7 @@ def main():
             label = label.to(device)
             label_fake = model(image)
 
-            loss = dsc_loss(label_fake, label) / accumulation_steps  # 计算损失
+            loss = dsc_loss(label_fake, label) / accumulation_steps
 
             loss_train.append(loss.item() * accumulation_steps)
             loss.backward()
@@ -213,7 +235,7 @@ def main():
                         if param.grad is not None:
                             grad = param.grad
                             print(f"{name:40s}: "
-                                  f"norm={grad.norm().item():8.4f}, " # norm最值得关注 
+                                  f"norm={grad.norm().item():8.4f}, "
                                   f"mean={grad.mean().item():8.4f}, "
                                   f"max={grad.max().item():8.4f}")
                         else:
@@ -301,12 +323,12 @@ def main():
         print(f"Epoch[{epoch + 1}]: Loss_test: {np.mean(loss_valid):.4f}, "
               f"Test_Dice: {np.mean(dice_valid):.4f}")
 
-        file.save(modelsave_path + "UNet3D_%06d.xlsx" % (epoch + 1))
+        file.save(modelsave_path / ("UNet3D_%06d.xlsx" % (epoch + 1)))
 
         if scheduler is not None:
             scheduler.step(loss_valid)
         if epoch % 10 == 0:
-            torch.save(model.state_dict(), modelsave_path + "UNet3D_%06d.pth" % (epoch + 1))
+            torch.save(model.state_dict(), modelsave_path / ("UNet3D_%06d.pth" % (epoch + 1)))
 
         if torch.cuda.is_available():
             allocated = torch.cuda.memory_allocated(device) / 1024 ** 3
