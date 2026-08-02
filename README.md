@@ -64,12 +64,18 @@ Note: Ensure that the image volumes and annotation masks are spatially aligned a
 
 ### 1. Build Dataset
 
-Use `DataProcess.py` to divide the paired multibeam water column volumes and voxel-level annotation masks into overlapping 3D patches for model training.
 
-Run the dataset construction script using the default project structure:
-The patch size and overlap ratio can also be configured in the script:
-The default patch size is 64 × 64 × 64 voxels with an overlap ratio of 0.5.
-Run the dataset construction script using the default project structure:
+如果想再简洁一点，可以写成：
+
+```markdown
+Use `DataProcess.py` to divide paired multibeam water-column volumes and voxel-level annotation masks into overlapping 3D patches for model training.
+
+The default patch size is 64 × 64 × 64 voxels, with an overlap ratio of 0.5. These settings can be modified directly in `DataProcess.py`.
+
+Run:
+
+```bash
+python data_processing/DataProcess.py
 
 ```bash
 python data_processing/DataProcess.py
