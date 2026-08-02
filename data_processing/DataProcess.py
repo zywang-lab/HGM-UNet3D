@@ -92,9 +92,9 @@ for idx in range(len(image_names)):
                 image_patch = image_array[z_start: z_start + b_nz, y_start: y_start + b_ny, x_start: x_start + b_nx]
                 label_patch = label_array[z_start: z_start + b_nz, y_start: y_start + b_ny, x_start: x_start + b_nx]
                 if len(np.unique(label_patch)) > 1:
-                    np.save(image_patch_save_folder / ("em710_train_pos_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), image_patch)
-                    np.save(label_patch_save_folder / ("em710_train_pos_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), label_patch)
+                    np.save(image_patch_save_folder / ("em_train_pos_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), image_patch)
+                    np.save(label_patch_save_folder / ("em_train_pos_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), label_patch)
                 elif np.random.random_sample() > 0.95:
-                    np.save(image_patch_save_folder / ("em710_train_neg_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), image_patch)
-                    np.save(label_patch_save_folder / ("em710_train_neg_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), label_patch)
+                    np.save(image_patch_save_folder / ("em_train_neg_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), image_patch)
+                    np.save(label_patch_save_folder / ("em_train_neg_" + str(idx).rjust(4, '0') + "_" + str(current_patch_id).rjust(4, '0') + '.npy'), label_patch)
                 current_patch_id = current_patch_id + 1
